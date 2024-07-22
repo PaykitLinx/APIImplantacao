@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: Implantação API
+  description: API para obter os dados de configuração do Paykit para instalações embarcadas.
+  version: 3.0.0
+#servers:
+#   - url: ""
+#     description: URL API
+paths:
+  /Login:
+    post:
+      summary: Realizar a autenticação com base no CNPJ a ser implementado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                    summary: CNPJ da loja a ser implantada, sem pontuações, somente números.
+                    type: string
+                    example: "23509552000125"
+                senha:
+                    summary: Senha de autenticação, fornecida pelo time de implantação do TEF.
+                    type: string
+                    example: "SENHA-INSTALACAO"
+                pdv:
+                    summary: Número do PDV que será implantado no estabelecimento
+                    type: string
+                    example: "999"
+      responses:
+        '200':
+          description: Login foi realizado com sucesso
+          parameters:
+        '401':
+          description: Não autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                retorno:
+                  summary: Autenticação
+                  value: "CNPJ ou senha incorretos"
+                retorno1:
+                  summary: Parametros
+                  value: "Parametros Inválidos"
+  /Config:
+    get:
+      summary: Retorna dados a serem configurados no PDV a ser implantado.
+      responses:
+        '200':    # status code
+          description: Um objeto JSON com os dados a serem configurados.
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  codigoEmpresa:
+                    summary: Código da Empresa no TEF
+                    type: integer
+                    example: 500
+                  codigoLoja: 
+                    summary: Código da Loja no TEF
+                    type: integer
+                    example: 304
+                  enderecoDtef8Ssl: 
+                    summary: DNS do servidor principal do TEF
+                    type: string
+                    example: "tef.address.com.br"
+                  portaDtef8Ssl: 
+                    summary: Porta do servidor principal do TEF
+                    type: integer
+                    example: 9999
+                  enderecoDtef8Ssl2: 
+                    summary: DNS do servidor de contigencia do TEF
+                    type: string
+                    example: "tef.address.com.br"
+                  portaDtef8Ssl2: 
+                    summary: Porta do servidor de contigencia do TEF
+                    type: integer
+                    example: 9999
+                  nomeEmpresa: 
+                    summary: Nome da Empresa cadastrada no TEF
+                    type: string
+                    example: "Empresa X"
+                  nomeLoja: 
+                    summary: Nome da Loja cadastrada no TEF
+                    type: string
+                    example: "Loja X"
+                  enderecoWebservice:
+                    summary: Endereço para download do certificado, (parametro do método BuscaCertificado da DPOSDRV.dll) 
+                    type: string
+                    example: "https://www.certificados.com/"
+        '401':
+          description: Não Autenticado
