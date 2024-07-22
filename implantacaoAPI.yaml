@@ -32,7 +32,6 @@ paths:
       responses:
         '200':
           description: Login foi realizado com sucesso
-          parameters:
         '401':
           description: Não autorizado
           content:
