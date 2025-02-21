@@ -88,9 +88,5 @@ paths:
                     summary: Nome da Loja cadastrada no TEF
                     type: string
                     example: "Loja X"
-                  enderecoWebservice:
-                    summary: Endereço para download do certificado, (parametro do método BuscaCertificado da DPOSDRV.dll) 
-                    type: string
-                    example: "https://www.certificados.com/"
         '401':
           description: Não Autenticado
